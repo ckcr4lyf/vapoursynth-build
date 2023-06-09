@@ -17,7 +17,7 @@ RUN ./configure
 RUN make -j$(nproc)
 RUN make install
 
-WORKDIR /apps/zimg
+WORKDIR /apps
 RUN git clone https://github.com/vapoursynth/vapoursynth.git
 WORKDIR /apps/vapoursynth
 RUN ./autogen.sh
