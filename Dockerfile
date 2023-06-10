@@ -3,7 +3,7 @@ FROM ubuntu
 RUN apt-get update
 
 # TODO: Compile x264 & ffmpeg?
-RUN apt-get install -y git build-essential autoconf libtool python3.10 python3-pip x264 ffmpeg
+RUN apt-get install -y git build-essential pkg-config autoconf libtool python3.10 python3-pip x264 ffmpeg
 
 RUN mkdir /apps
 WORKDIR /apps
