@@ -17,10 +17,14 @@ RUN ./configure
 RUN make -j$(nproc)
 RUN make install
 
+RUN pip3 install cython
+
 WORKDIR /apps
 RUN git clone https://github.com/vapoursynth/vapoursynth.git
 WORKDIR /apps/vapoursynth
 RUN ./autogen.sh
 RUN ./configure
+RUN make -j$(nproc)
+RUN make install
 
 CMD [ "/bin/bash" ]
