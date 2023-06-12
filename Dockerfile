@@ -27,4 +27,7 @@ RUN ./configure
 RUN make -j$(nproc)
 RUN make install
 
+ENV PYTHONPATH=/usr/local/lib/python3.10/site-packages
+ENV LD_LIBRARY_PATH=/usr/local/lib
+
 CMD [ "/bin/bash" ]
