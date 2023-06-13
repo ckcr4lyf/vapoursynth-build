@@ -44,26 +44,13 @@ RUN make install
 RUN mkdir /usr/local/lib/vapoursynth
 RUN ln -s /usr/local/lib/libffms2.so /usr/local/lib/vapoursynth/libffms2.so
 
-WORKDIR /apps
-RUN git clone https://github.com/strukturag/libheif.git
-WORKDIR /apps/libheif
-RUN git checkout v1.15.2
-RUN ./autogen.sh
-RUN ./configure --disable-shared --disable-examples --disable-x265 --disable-rav1e
-RUN make -j$(nproc)
-RUN make install
-
-WORKDIR /apps
-RUN git clone https://gitlab.com/libtiff/libtiff.git --depth 1
-WORKDIR /apps/libtiff
-RUN cmake -S . -B building -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -Dlerc=OFF -G Ninja
-RUN ninja -C building install
+RUN apt-get install libpng-dev
 
 WORKDIR /apps
 RUN git clone https://github.com/ImageMagick/ImageMagick.git
 WORKDIR /apps/ImageMagick
 RUN git checkout 7.1.1-11
-RUN ./configure --enable-hdri
+RUN ./configure --enable-hdri --with-png
 RUN make -j$(nproc)
 RUN make install
 
