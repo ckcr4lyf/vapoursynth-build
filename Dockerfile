@@ -55,7 +55,7 @@ RUN make install
 WORKDIR /apps
 RUN git clone https://gitlab.com/libtiff/libtiff.git --depth 1
 WORKDIR /apps/libtiff
-RUN cmake -S . -B building -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/${{matrix.sys}} -Dlerc=OFF -G Ninja
+RUN cmake -S . -B building -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -Dlerc=OFF -G Ninja
 RUN ninja -C building install
 
 WORKDIR /apps
@@ -74,6 +74,7 @@ WORKDIR /apps/vs-imwri
 RUN git checkout R2
 RUN meson build
 RUN ninja -C build
+RUN ln -s /apps/vs-imwri/build/libimwri.so /usr/local/lib/vapoursynth/libimwri.so
 
 WORKDIR /
 
