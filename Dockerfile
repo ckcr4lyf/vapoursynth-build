@@ -47,6 +47,7 @@ RUN ln -s /usr/local/lib/libffms2.so /usr/local/lib/vapoursynth/libffms2.so
 WORKDIR /apps
 RUN git clone https://github.com/strukturag/libheif.git --depth 1
 WORKDIR /apps/libheif
+RUN git checkout v1.15.2
 RUN ./autogen.sh
 RUN ./configure --disable-shared --disable-examples --disable-x265 --disable-rav1e
 RUN make -j$(nproc)
