@@ -45,7 +45,7 @@ RUN mkdir /usr/local/lib/vapoursynth
 RUN ln -s /usr/local/lib/libffms2.so /usr/local/lib/vapoursynth/libffms2.so
 
 WORKDIR /apps
-RUN git clone https://github.com/strukturag/libheif.git --depth 1
+RUN git clone https://github.com/strukturag/libheif.git
 WORKDIR /apps/libheif
 RUN git checkout v1.15.2
 RUN ./autogen.sh
