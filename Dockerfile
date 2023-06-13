@@ -3,7 +3,7 @@ FROM ubuntu
 RUN apt-get update
 
 # TODO: Compile x264 & ffmpeg?
-RUN apt-get install -y git cmake ninja-build build-essential pkg-config autoconf libtool python3.10 python3-pip x264 ffmpeg libavformat-dev libavcodec-dev libswscale-dev libavutil-dev libswresample-dev libpng-dev
+RUN apt-get install -y git cmake ninja-build build-essential pkg-config autoconf libtool python3.10 python3-pip x264 ffmpeg libavformat-dev libavcodec-dev libswscale-dev libavutil-dev libswresample-dev libpng-dev libass-dev 
 
 RUN mkdir /apps
 WORKDIR /apps
@@ -61,6 +61,14 @@ RUN git checkout R2
 RUN meson build
 RUN ninja -C build
 RUN ln -s /apps/vs-imwri/build/libimwri.so /usr/local/lib/vapoursynth/libimwri.so
+
+WORKDIR /apps
+RUN git clone https://github.com/vapoursynth/subtext.git
+WORKDIR /apps/subtext
+RUN git checkout R3
+RUN meson build
+RUN ninja -C build
+RUN ln -s /apps/subtext/build/libsubtext.so /usr/local/lib/vapoursynth/libsubtext.so
 
 WORKDIR /
 
