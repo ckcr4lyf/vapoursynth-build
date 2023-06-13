@@ -3,7 +3,7 @@ FROM ubuntu
 RUN apt-get update
 
 # TODO: Compile x264 & ffmpeg?
-RUN apt-get install -y git cmake ninja-build build-essential pkg-config autoconf libtool python3.10 python3-pip x264 ffmpeg libavformat-dev libavcodec-dev libswscale-dev libavutil-dev libswresample-dev
+RUN apt-get install -y git cmake ninja-build build-essential pkg-config autoconf libtool python3.10 python3-pip x264 ffmpeg libavformat-dev libavcodec-dev libswscale-dev libavutil-dev libswresample-dev libpng-dev
 
 RUN mkdir /apps
 WORKDIR /apps
@@ -43,8 +43,6 @@ RUN make -j$(nproc)
 RUN make install
 RUN mkdir /usr/local/lib/vapoursynth
 RUN ln -s /usr/local/lib/libffms2.so /usr/local/lib/vapoursynth/libffms2.so
-
-RUN apt-get install libpng-dev
 
 WORKDIR /apps
 RUN git clone https://github.com/ImageMagick/ImageMagick.git
