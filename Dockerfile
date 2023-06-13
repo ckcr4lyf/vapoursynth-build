@@ -41,5 +41,7 @@ RUN ./autogen.sh
 RUN ./configure
 RUN make -j$(nproc)
 RUN make install
+RUN mkdir /usr/local/lib/vapoursynth
+RUN ln -s /usr/local/lib/libffms2.so /usr/local/lib/vapoursynth/libffms2.so
 
 CMD [ "/bin/bash" ]
