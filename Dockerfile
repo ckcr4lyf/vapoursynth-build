@@ -3,7 +3,7 @@ FROM ubuntu
 RUN apt-get update
 
 # TODO: Compile x264 & ffmpeg?
-RUN apt-get install -y git ninja-build build-essential pkg-config autoconf libtool python3.10 python3-pip x264 ffmpeg libavformat-dev libavcodec-dev libswscale-dev libavutil-dev libswresample-dev
+RUN apt-get install -y git cmake ninja-build build-essential pkg-config autoconf libtool python3.10 python3-pip x264 ffmpeg libavformat-dev libavcodec-dev libswscale-dev libavutil-dev libswresample-dev
 
 RUN mkdir /apps
 WORKDIR /apps
@@ -45,6 +45,20 @@ RUN mkdir /usr/local/lib/vapoursynth
 RUN ln -s /usr/local/lib/libffms2.so /usr/local/lib/vapoursynth/libffms2.so
 
 WORKDIR /apps
+RUN git clone https://github.com/strukturag/libheif.git --depth 1
+WORKDIR /apps/libheif
+RUN ./autogen.sh
+RUN ./configure --disable-shared --disable-examples --disable-x265 --disable-rav1e
+RUN make -j$(nproc)
+RUN make install
+
+WORKDIR /apps
+RUN git clone https://gitlab.com/libtiff/libtiff.git --depth 1
+WORKDIR /apps/libtiff
+RUN cmake -S . -B building -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/${{matrix.sys}} -Dlerc=OFF -G Ninja
+RUN ninja -C building install
+
+WORKDIR /apps
 RUN git clone https://github.com/ImageMagick/ImageMagick.git
 WORKDIR /apps/ImageMagick
 RUN git checkout 7.1.1-11
@@ -60,5 +74,7 @@ WORKDIR /apps/vs-imwri
 RUN git checkout R2
 RUN meson build
 RUN ninja -C build
+
+WORKDIR /
 
 CMD [ "/bin/bash" ]
