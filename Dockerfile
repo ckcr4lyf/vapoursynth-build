@@ -70,6 +70,14 @@ RUN meson build
 RUN ninja -C build
 RUN ln -s /apps/subtext/build/libsubtext.so /usr/local/lib/vapoursynth/libsubtext.so
 
+WORKDIR /apps
+RUN git clone https://github.com/dubhater/vapoursynth-fillborders.git
+WORKDIR /apps/vapoursynth-fillborders
+RUN git checkout v2
+RUN meson build
+RUN ninja -C build
+RUN ln -s /apps/vapoursynth-fillborders/build/libfillborders.so /usr/local/lib/vapoursynth/libfillborders.so
+
 WORKDIR /
 
 CMD [ "/bin/bash" ]
